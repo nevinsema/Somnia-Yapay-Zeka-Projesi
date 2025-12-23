@@ -1,4 +1,4 @@
-// === SOMNIA INDEX PAGE - MOON RIPPLE BACKGROUND ===
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.createElement("canvas");
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let ripples = [];
 
     function createRipple() {
-        // ripple bir noktadan expand ediyor
+        
         const x = canvas.width * 0.5;
         const y = canvas.height * 0.45;
 
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.beginPath();
             ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
 
-            // Neon moon ripple gradient (Turkuaz-Mor-Pembe)
+             
             const g = ctx.createRadialGradient(rp.x, rp.y, rp.r * 0.2, rp.x, rp.y, rp.r);
             g.addColorStop(0, `rgba(103, 249, 255, ${rp.alpha})`); // turkuaz
             g.addColorStop(0.5, `rgba(192, 155, 255, ${rp.alpha * 0.6})`); // mor
@@ -53,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.fillStyle = g;
             ctx.fill();
 
-            rp.r += 0.45; // expansion speed
-            rp.alpha *= 0.985; // fade out
+            rp.r += 0.45; 
+            rp.alpha *= 0.985;
             if (rp.alpha < 0.01) ripples.splice(i, 1);
         });
 
@@ -63,3 +63,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     draw();
 });
+
