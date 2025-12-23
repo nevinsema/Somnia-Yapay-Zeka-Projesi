@@ -1,13 +1,11 @@
-// === SOMNIA AUTH PAGES - DREAM GLOW + FLOATING DUST ===
-
 document.addEventListener("DOMContentLoaded", () => {
-    // Bu script sadece login ve register sayfalarında çalışsın
+    
     const pageTitle = document.querySelector("h1");
     if (!pageTitle) return;
     const titleText = pageTitle.textContent.toLowerCase();
     if (!(titleText.includes("giriş") || titleText.includes("kayıt"))) return;
 
-    // ===== CANVAS OLUŞTUR =====
+    
     const canvas = document.createElement("canvas");
     canvas.id = "dreamDustCanvas";
     canvas.style.position = "fixed";
@@ -45,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     createDust();
 
-    // ===== DREAM GLOW PULSE =====
+    
     function applyGlow() {
         document.querySelector(".container").style.boxShadow =
             `0 0 18px rgba(103,249,255,0.35),
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     applyGlow();
 
-    // ===== DRAW =====
+   
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -86,3 +84,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     draw();
 });
+
