@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="model-sidebar">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>⚙️ Eğitim Günlüğü</h3>
+        <span onclick="toggleModelMenu()" style="cursor:pointer; font-size:1.2rem; padding:5px;">✖</span>
+    </div>
+    <hr style="border-color:rgba(103,249,255,0.2); margin:10px 0;">
+    
+    {% if model_stats.has_data %}
+        <p><strong>Eğitilen Veri:</strong> <br>452 (Global) + {{ model_stats.total_records }} (Sen)</p>
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; margin-top:15px;">
+            <p style="color:#a2eaff; font-size:0.9rem;">Son Eğitim Döngüsü:</p>
+            <p>Gerçek Verim: <strong style="color:#8bffb2">%{{ "%.1f"|format(model_stats.last_real * 100) }}</strong></p>
+            <p>Model Tahmini: <strong>%{{ "%.1f"|format(model_stats.last_pred * 100) }}</strong></p>
+            <p>Sapma (Loss): <strong style="color:#ff595e">%{{ "%.1f"|format(model_stats.loss * 100) }}</strong></p>
+        </div>
+        <p style="font-size:0.8rem; color:#8db5ce; margin-top:10px;">*Model her girişte güncellenir.</p>
+    {% else %}
+        <p>Henüz veri girmedin.</p>
+    {% endif %}
+    <div style="margin-top:auto; font-size:0.7rem; color:#555;">v2.8 Custom-Layout</div>
+</div>
+
+<div class="main-content-wrapper">
+    
+    <div class="header-row">
+        <div id="model-menu-btn" onclick="toggleModelMenu()" title="Menüyü Aç">☰</div>
+        <h1>Somnia AI</h1>
+    </div>
+    
+    <p class="subtitle">Veri setine dayalı bilimsel uyku analizi.</p>
+
+    <div class="card">
+        <form method="post">
+            <h3 style="color:#a2eaff; margin-bottom:10px;">⏰ Uyku Saatleri</h3>
+            <div style="display:flex; gap:10px;">
+                <div style="flex:1;">
+                    <label>Yatma Saati</label>
+                    <input type="time" name="bed_time" value="{{ bed_time }}" required>
+                </div>
+                <div style="flex:1;">
+                    <label>Uyanma Saati</label>
+                    <input type="time" name="wake_time" value="{{ wake_time }}" required>
+                </div>
+            </div>
+
+            <label style="margin-top:10px;">Verim Puanın (%0 - %100)</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="range" name="efficiency" min="0" max="100" value="{{ efficiency }}" 
+                       oninput="document.getElementById('eff_out').value = this.value" style="flex:1;">
+                <output id="eff_out" style="color:#67f9ff; font-weight:bold; width:30px;">{{ efficiency }}</output>
+            </div>
+
+            <hr style="border-color:rgba(103,249,255,0.1); margin:15px 0;">
+
+            <h3 style="color:#ffb6d9; margin-bottom:10px;">🍷 Yaşam Tarzı</h3>
+            <label>Kafein Tüketimi</label>
+            <select name="caffeine">
+                <option value="0" {% if caffeine==0 %}selected{% endif %}>Hiç (0mg)</option>
+                <option value="50" {% if caffeine==50 %}selected{% endif %}>Az (1 Çay/Kola)</option>
+                <option value="100" {% if caffeine==100 %}selected{% endif %}>Orta (1 Kahve)</option>
+                <option value="200" {% if caffeine==200 %}selected{% endif %}>Çok (2+ Kahve)</option>
+                <option value="300" {% if caffeine==300 %}selected{% endif %}>Aşırı (300mg+)</option>
+            </select>
+
+            <label>Alkol (Kadeh/Bira)</label>
+            <input type="number" name="alcohol" min="0" max="10" value="{{ alcohol }}">
+
+            <label>Sigara Kullanımı?</label>
+            <select name="smoking">
+                <option value="0" {% if smoking==0 %}selected{% endif %}>Hayır</option>
+                <option value="1" {% if smoking==1 %}selected{% endif %}>Evet</option>
+            </select>
+
+            <label>Haftalık Egzersiz Sayısı</label>
+            <input type="number" name="exercise" min="0" max="7" value="{{ exercise }}">
+
+            <button type="submit">Analiz Et & Eğit</button>
+        </form>
+    </div>
+
+    {% if suggestion %}
+    <div class="card" style="margin-top:20px; border-color: #67f9ff; box-shadow:0 0 15px rgba(103,249,255,0.1); position: relative;">
+        
+        <div style="
+            position: absolute; top: 10px; right: 15px; 
+            font-size: 0.75rem; font-weight: bold; 
+            padding: 4px 8px; border-radius: 6px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        ">
+            {% if suggestion_source == 'history' %}
+                📊 Geçmiş İstatistiklerine Göre
+            {% else %}
+                ⚡ Güncel Analize Göre
+            {% endif %}
+        </div>
+
+        <h3 style="color:#67f9ff; margin-bottom: 15px;">🧠 Somnia Analizi</h3>
+        
+        <div style="font-size: 1.1rem; line-height: 1.6; color: #e6f1ff; margin-bottom: 15px;">
+            {{ feedback_text|safe }}
+        </div>
+        
+        <div style="background: rgba(103,249,255,0.1); padding: 8px; border-radius: 8px; display: inline-block; font-size: 0.9rem; color: #8db5ce;">
+            🎯 Hedef Yatma Saati: <strong style="color: #fff;">{{ "%02d"|format(suggestion.best_bedtime_hour) }}:{{ "%02d"|format(suggestion.best_bedtime_minute) }}</strong>
+        </div>
+
+    </div>
+    {% endif %}
+</div>
+
+<div id="chat-window">
+    <div class="chat-header">Somnia 🌙</div>
+    <div class="chat-body" id="chat-body">
+        <div class="msg bot">Bugün nasıl uyudun bakalım? Verilerini girince konuşalım.</div>
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="chat-input" placeholder="Buraya yaz..." onkeypress="handleKey(event)">
+        <button onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<style>
+    /* DÜZEN */
+    .main-content-wrapper { width: 100%; max-width: 600px; margin-right: 400px; }
+    
+    /* SENİN AYARLADIĞIN HİZALAMA */
+    .header-row {
+        display: flex;
+        align-items: center; 
+        gap: 165px; /* Senin istediğin özel boşluk */
+        margin-bottom: 5px;
+    }
+    .header-row h1 {
+        margin: 0; 
+        line-height: 1; 
+    }
+
+    #model-menu-btn { 
+        position: static; 
+        background: rgba(10,30,55,0.6); 
+        color: #67f9ff; 
+        min-width: 45px; 
+        height: 45px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        border-radius: 8px; 
+        border: 1px solid #67f9ff; 
+        cursor: pointer; 
+        font-weight: bold; 
+        font-size: 1.4rem; 
+        transition: 0.3s; 
+    }
+    #model-menu-btn:hover { background: rgba(103,249,255,0.2); }
+
+    @media (max-width: 1100px) { .main-content-wrapper { margin-right: 0; max-width: 100%; } #chat-window { display: none !important; } }
+    
+    /* SENİN İSTEDİĞİN GİZLİ MENÜ KONUMU */
+    #model-sidebar { position: fixed; top: 0; left: -3500px; width: 300px; height: 100%; background: rgba(5, 15, 30, 0.98); border-right: 1px solid #67f9ff; padding: 20px; transition: 0.4s ease; z-index: 3000; box-shadow: 5px 0 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+    #model-sidebar.active { left: 0; }
+
+    /* SENİN AYARLADIĞIN CHAT PENCERESİ */
+    #chat-window { 
+        display: flex; 
+        position: fixed; 
+        top: 30px; 
+        bottom: 250px; /* Senin değerin */
+        right: 10px;   /* Senin değerin */
+        width: 320px;  /* Senin değerin */
+        background: rgba(13, 25, 48, 0.9); 
+        border: 1px solid #4bfdf6; 
+        border-radius: 20px; 
+        flex-direction: column; 
+        backdrop-filter: blur(10px); 
+        box-shadow: -5px 5px 20px rgba(0,0,0,0.4); 
+        z-index: 1000; 
+        overflow: hidden; 
+    }
+    .chat-header { background: linear-gradient(90deg, #1c3b65, #0f2441); padding: 15px; font-size: 1.2rem; font-weight: bold; color: #67f9ff; text-align: center; border-bottom: 1px solid rgba(103,249,255,0.3); }
+    .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: radial-gradient(circle at center, rgba(30,60,114,0.1), transparent); }
+    .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 0.95rem; line-height: 1.4; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .msg.bot { background: rgba(75, 253, 246, 0.15); color: #e6f1ff; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid rgba(75, 253, 246, 0.2); }
+    .msg.user { background: rgba(192, 155, 255, 0.25); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; border: 1px solid rgba(192, 155, 255, 0.3); }
+    .chat-footer { padding: 12px; border-top: 1px solid rgba(103,249,255,0.2); display: flex; gap: 8px; background: rgba(0,0,0,0.3); }
+    .chat-footer input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(103,249,255,0.3); background: #05101f; color: white; font-size: 0.95rem; }
+    .chat-footer button { width: 45px; background: linear-gradient(135deg, #67f9ff, #4bfdf6); color: #000; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
+</style>
+
+<script>
+    function toggleModelMenu() { document.getElementById("model-sidebar").classList.toggle("active"); }
+    const autoMsg = `{{ auto_chat_msg|safe if auto_chat_msg else '' }}`;
+    if (autoMsg) { const b = document.getElementById("chat-body"); b.innerHTML += `<div class="msg bot" style="border-color:#ff595e;">${autoMsg}</div>`; b.scrollTop = b.scrollHeight; }
+    function handleKey(e) { if(e.key==="Enter") sendMessage(); }
+    function sendMessage() {
+        const inp = document.getElementById("chat-input");
+        const body = document.getElementById("chat-body");
+        const val = inp.value.trim();
+        if(!val) return;
+        body.innerHTML += `<div class="msg user">${val}</div>`;
+        inp.value = ""; body.scrollTop = body.scrollHeight;
+        fetch("/api/chat", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({message: val}) })
+        .then(r=>r.json()).then(d=>{ body.innerHTML += `<div class="msg bot">${d.response}</div>`; body.scrollTop = body.scrollHeight; });
+    }
+</script>
+
+{% endblock %}

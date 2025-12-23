@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Şifremi Unuttum</h1>
+<p class="subtitle">Önce kullanıcı adını gir, ardından güvenlik sorunu göstereceğiz.</p>
+
+<div class="card">
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="post">
+        <label for="username">Kullanıcı adı</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Devam et</button>
+    </form>
+</div>
+
+{% endblock %}

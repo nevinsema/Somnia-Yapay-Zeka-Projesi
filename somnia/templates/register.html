@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Kayıt Ol</h1>
+<p class="subtitle">Somnia ile uykunu optimize etmeye başla.</p>
+
+<div class="card">
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="post">
+        <label for="username">Kullanıcı adı</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Şifre</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="password2">Şifre (tekrar)</label>
+        <input type="password" id="password2" name="password2" required>
+
+        <hr style="margin:12px 0; border-color:rgba(103,249,255,0.15);">
+
+        <label>Güvenlik sorusu</label>
+        <select name="sec_type" id="sec_type" style="margin-bottom:8px;">
+            <option value="preset">Hazır sorulardan seç</option>
+            <option value="custom">Kendim yazmak istiyorum</option>
+        </select>
+
+        <select name="sec_question_select" id="sec_q_select">
+            <option value="İlk evcil hayvanının adı nedir?">İlk evcil hayvanının adı nedir?</option>
+            <option value="Çocukluk lakabın nedir?">Çocukluk lakabın nedir?</option>
+            <option value="En sevdiğin öğretmenin adı nedir?">En sevdiğin öğretmenin adı nedir?</option>
+        </select>
+
+        <input type="text" name="sec_question_custom" id="sec_q_custom"
+               placeholder="Kendi sorun (sec_type = kendim yazmak istiyorum seçiliyse)">
+
+        <label for="sec_answer">Güvenlik sorusu cevabı</label>
+        <input type="text" id="sec_answer" name="sec_answer" required>
+
+        <button type="submit">Kaydı tamamla</button>
+    </form>
+</div>
+
+<script>
+    const selType = document.getElementById('sec_type');
+    const selPreset = document.getElementById('sec_q_select');
+    const inpCustom = document.getElementById('sec_q_custom');
+
+    function updateQuestionInputs() {
+        if (selType.value === 'custom') {
+            selPreset.disabled = true;
+            selPreset.style.opacity = 0.3;
+            inpCustom.disabled = false;
+            inpCustom.style.opacity = 1;
+        } else {
+            selPreset.disabled = false;
+            selPreset.style.opacity = 1;
+            inpCustom.disabled = true;
+            inpCustom.style.opacity = 0.3;
+        }
+    }
+    selType.addEventListener('change', updateQuestionInputs);
+    updateQuestionInputs();
+</script>
+
+{% endblock %}

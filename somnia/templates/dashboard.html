@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>📊 Somnia Uyku Analiz Paneli</h1>
+<p class="subtitle">Uyku süren, model tahmini ve senin hislerin bir arada.</p>
+
+<div class="card" style="margin-top:20px;">
+    <canvas id="sleepDurationChart"></canvas>
+</div>
+
+<div class="card">
+    <canvas id="scoreChart"></canvas>
+</div>
+
+<div class="card">
+    <canvas id="envChart"></canvas>
+</div>
+
+<a href="{{ url_for('index') }}"
+   style="display:block; text-align:center; margin-top:16px; color:#4bfdf6; text-decoration:none;">
+    ← Uyku asistanına geri dön
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Şifre Sıfırla</h1>
+<p class="subtitle">Güvenlik sorunu yanıtla ve yeni şifreni belirle.</p>
+
+<div class="card">
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <p style="margin-bottom:10px; font-size:0.9rem;">
+        <strong>{{ username }}</strong> için güvenlik sorusu:
+        <br><em>{{ question }}</em>
+    </p>
+
+    <form method="post">
+        <label for="answer">Cevabın</label>
+        <input type="text" id="answer" name="answer" required>
+
+        <label for="new_password">Yeni şifre</label>
+        <input type="password" id="new_password" name="new_password" required>
+
+        <label for="new_password2">Yeni şifre (tekrar)</label>
+        <input type="password" id="new_password2" name="new_password2" required>
+
+        <button type="submit">Şifreyi sıfırla</button>
+    </form>
+</div>
+
+{% endblock %}

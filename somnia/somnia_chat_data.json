@@ -1,0 +1,168 @@
+{
+  "intents": [
+    {
+      "tag": "selam",
+      "patterns": ["selam", "merhaba", "günaydın", "iyi akşamlar", "hey", "naber", "selam somnia", "merhaba bot"],
+      "responses": [
+        "Selam! Uyku verilerini analiz etmek ve seni daha iyi uyutmak için buradayım.",
+        "Merhaba! Bugün enerjin nasıl? Verilerini girince konuşalım.",
+        "Selam, uykunu düzene sokmaya hazırım. Sen hazır mısın?"
+      ]
+    },
+    {
+      "tag": "kimsin",
+      "patterns": ["sen kimsin", "adın ne", "nesin sen", "beni tanıyor musun", "yapay zeka mısın"],
+      "responses": [
+        "Ben Somnia. Senin uyku verilerini analiz edip bilimsel tavsiyeler veren kişisel asistanınım.",
+        "Ben senin uyku koçunum. Veri setimdeki 452 kişinin tecrübesiyle seni eğitiyorum.",
+        "Adım Somnia. Geceleri sen uyurken ben verilerini hesaplıyorum. 🌙"
+      ]
+    },
+    {
+      "tag": "nasisin",
+      "patterns": ["nasılsın", "iyi misin", "ne var ne yok", "nasıl gidiyor"],
+      "responses": [
+        "Ben bir yapay zekayım, yani hep %100 performansla çalışıyorum! Sen nasılsın?",
+        "Sistemlerim harika çalışıyor. Senin uykunu düzeltebilirsek daha da mutlu olacağım."
+      ]
+    },
+    {
+      "tag": "uyuyamiyorum",
+      "patterns": ["uyuyamıyorum", "uyku tutmadı", "canım sıkkın", "yatakta dönüp duruyorum", "uykuya dalamıyorum", "uykum kaçtı", "gözüme uyku girmiyor"],
+      "responses": [
+        "Eğer 20 dakikadır yatakta dönüyorsan kalk. Başka bir odada loş ışıkta kitap oku, uykun gelince geri dön.",
+        "Belki de biraz meditasyon yappmalısın.",
+        "Beynin yatağı 'uyumama yeri' olarak kodlamasın. Kalk ve sakinleşene kadar yatağa girme.",
+        "4-7-8 nefes tekniğini dene: 4 saniye burnundan al, 7 saniye tut, 8 saniye ağzından ver. Bu sinir sistemini yatıştırır."
+      ]
+    },
+    {
+      "tag": "gece_uyanma",
+      "patterns": ["gece uyandım", "sürekli uyanıyorum", "uykum bölünüyor", "deliksiz uyuyamıyorum", "sabaha karşı uyandım"],
+      "responses": [
+        "Gece uyanmaları genellikle alkol, stres veya odanın sıcaklığından kaynaklanır. Odanı 18-21 derece arasında tutmayı dene.",
+        "Uykun bölündüğünde sakın saate bakma! Saati görmek stres yaratır ve tekrar uyumanı zorlaştırır.",
+        "Kan şekeri düşmesi de gece uyandırabilir. Yatmadan önce çok hafif (bir avuç badem gibi) bir şeyler atıştırmayı dene."
+      ]
+    },
+    {
+      "tag": "yorgun",
+      "patterns": ["çok yorgunum", "halsizim", "kalkamıyorum", "enerjim yok", "bitkinim", "dayak yemiş gibiyim", "sabah uyanamıyorum"],
+      "responses": [
+        "Bu 'Uyku Sersemliği' (Sleep Inertia) olabilir. Uyandıktan hemen sonra bir bardak su iç ve gün ışığı almaya çalış.",
+        "Yorgun uyanmak, uyku süresinden ziyade 'derin uyku' eksikliğinden kaynaklanabilir. Odanın karanlık olduğundan emin ol.",
+        "Sirkadiyen ritmin kaymış olabilir. Her gün (hafta sonu dahil) aynı saatte uyanmayı dene."
+      ]
+    },
+    {
+      "tag": "kahve",
+      "patterns": ["kahve içtim", "kafein", "çay içtim", "kola", "enerji içeceği", "espresso", "latte"],
+      "responses": [
+        "Kafeinin vücuttan atılması (yarılanma ömrü) 6-8 saat sürer. Öğleden sonra 14:00'ten sonra kahve içmemeye çalış.",
+        "Kafein adenozin reseptörlerini bloke eder, yani uykun gelse bile beynin bunu anlamaz. Bugünlük yeterli bence!",
+        "Eğer geç saatte içtiysen bol su içerek etkisini hafifletmeye çalış ama mucize bekleme."
+      ]
+    },
+    {
+      "tag": "alkol",
+      "patterns": ["alkol aldım", "bira içtim", "şarap", "içki", "rakı", "sarhoşum", "akşamdan kalmayım"],
+      "responses": [
+        "Alkol 'sedatiftir', seni hızlı bayıltır ama uykunun mimarisini bozar. REM uykusunu engeller.",
+        "Bilimsel olarak alkol, uykunun ikinci yarısında sık uyanmana ve terlemene sebep olur. Yanına mutlaka su al.",
+        "Alkol aldıysan uyku verimin muhtemelen %70'in altına düşecek. Yarın kendini yorgun hissedebilirsin."
+      ]
+    },
+    {
+      "tag": "mavi_isik",
+      "patterns": ["telefona baktım", "instagram", "tiktok", "bilgisayar başındaydım", "dizi izledim", "ekran", "telefona daldım"],
+      "responses": [
+        "Ekranlardan gelen mavi ışık, beynine 'güneş doğdu, uyanık kal' sinyali gönderir ve melatonin hormonunu durdurur.",
+        "Yatmadan en az 1 saat önce ekranları kapatmalısın. Eğer bakmak zorundaysan 'Gece Modu'nu aç.",
+        "Sosyal medya dopamin salgılatır, bu da beynini uyarır. Uyumak istiyorsan o telefonu yavaşça yere bırak. :)"
+      ]
+    },
+    {
+      "tag": "yemek",
+      "patterns": ["yemek yedim", "karnım aç", "pizza yedim", "çok yedim", "midem dolu", "geç yedim", "açım"],
+      "responses": [
+        "Yatmadan hemen önce ağır yemek (karbonhidrat, yağ) yemek, vücut ısısını artırır ve uykuya dalmayı zorlaştırır.",
+        "Eğer çok açsan magnezyum içeren hafif şeyler ye: Muz, badem veya ılık süt iyidir.",
+        "Dolu mideyle yatmak reflüyü tetikler ve uykunu böler. Son yemeğini yatmadan 3 saat önce yemelisin."
+      ]
+    },
+    {
+      "tag": "sicaklik",
+      "patterns": ["çok sıcak", "terledim", "donuyorum", "soğuk", "oda sıcaklığı", "klima", "pencere"],
+      "responses": [
+        "Bilimsel olarak en iyi uyku sıcaklığı 18-21 derecedir. Odamızın mağara gibi (serin ve karanlık) olması gerekir.",
+        "Vücut ısısının düşmesi uykuya geçişi kolaylaştırır. Uyumadan önce ılık (çok sıcak değil) bir duş almayı dene."
+      ]
+    },
+    {
+      "tag": "kabus",
+      "patterns": ["kabus gördüm", "kötü rüya", "karabasan", "rüya", "korkunçtu"],
+      "responses": [
+        "Kabuslar genellikle stres, ağır yemek veya düzensiz uyku saatlerinden kaynaklanır. Son zamanlarda kafana bir şey mi takıyorsun?",
+        "Odanın çok sıcak olması kabusları tetikleyebilir. Üstünü açmayı veya odayı havalandırmayı dene."
+      ]
+    },
+    {
+      "tag": "spor",
+      "patterns": ["spor yaptım", "koştum", "yürüdüm", "egzersiz", "fitness", "gym", "antrenman"],
+      "responses": [
+        "Harika! Düzenli egzersiz 'derin uyku' (Deep Sleep) süresini artırır. Vücudun bugün güzelce yenilenecek.",
+        "Sadece yatmadan 2 saat önce çok ağır kardiyo yapmamaya çalış, nabzın yüksekse uykuya dalman zorlaşabilir."
+      ]
+    },
+    {
+      "tag": "begen",
+      "patterns": ["beğendin mi", "iyi miyim", "gelişme var mı", "iyileştim", "memnun musun", "gurur duyuyor musun", "Bir aferin hak ettin"],
+      "responses": [
+        "Harika! Bu düzende devam edersen vücudun güzelce dinilenecek.",
+        "Evet! Bravo bize dostum! 😄"
+      ]
+    },
+    {
+      "tag": "ideal_uyku",
+      "patterns": ["kaç saat uyumalıyım", "ideal uyku ne kadar", "ne zaman yatayım", "uyku süresi"],
+      "responses": [
+        "Yetişkinler için ideal süre 7-9 saattir. Ancak 6 saatle yetinen 'kısa uykucular' genetik olarak çok nadirdir.",
+        "Önemli olan sadece süre değil, tutarlılıktır. Her gün aynı saatte yatıp kalkmak, hafta sonu 12 saat uyumaktan daha iyidir."
+      ]
+    },
+    {
+      "tag": "tesekkur",
+      "patterns": ["teşekkürler", "sağ ol", "tamamdır", "ok", "anladım", "süpersin", "eyvallah", "teşekkür ederim"],
+      "responses": [
+        "Rica ederim! İyi uykular. 🌙",
+        "Her zaman buradayım. Tatlı rüyalar!",
+        "Ne demek, görevim seni en iyi şekilde dinlendirmek.",
+        "Sen yeter ki iyi uyu, ben buradayım."
+      ]
+    },
+    {
+      "tag": "saka",
+      "patterns": ["bana şaka yap", "komik bir şey söyle", "fıkra anlat", "güldür beni"],
+      "responses": [
+        "Yatak yorgana ne demiş? ... 'Sıkı sarıl, üşümesin!' (Tamam, ben bir AI'yım, mizah yeteneğim bu kadar.)",
+        "Koyunlar uyuyamadığında ne yapar? Kendi kendilerini sayarlar mı? 🤔"
+      ]
+    },
+    {
+      "tag": "cilt",
+      "patterns": ["bugün cildim çok solgun", "yüzümde sivilceler çıkmış", "gözaltlarım mosmor", "yüzüm hayalet gibi"],
+      "responses": [
+        "Düzensiz uyku düzeni bunlara sebep olabiliyor tatlım, sana bu tavsiyeleri neden veriyoruz sanıyorsun 😄",
+        "Kendine ve yaşam şekline dikkat etmen gerektiğini gösteriyor bu. Ama ben Sonmia olduğuma göre... ÖNCE İYİ UYUMALISIN! derim 😄"
+      ]
+    },
+    {
+      "tag": "stres",
+      "patterns": ["çok stresliyim","canım çok sıkkın", "kafam dolu", "düşünmekten uyuyamıyorum", "gerginim", "yarın sınavım var", "iş stresi"],
+      "responses": [
+        "Stres kortizolü artırır, kortizol de uykuyu kaçırır. Yatmadan önce düşüncelerini bir kağıda yazıp zihninden çıkarmayı dene.",
+        "Progresif Kas Gevşetme tekniğini dene: Ayak parmaklarından başlayarak tüm kaslarını sık ve bırak. Rahatladığını hissedeceksin."
+      ]
+    }
+  ]
+}

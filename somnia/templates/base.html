@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <title>Somnia – Yapay Zekâ Uyku Asistanı</title>
+    <link rel="icon" href="https://img.icons8.com/fluency/48/sleeping.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #0c2844 0%, #05101f 40%, #020812 100%);
+            color: #e6f1ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 30px 10px;
+            overflow-x: hidden;
+        }
+
+        .shell {
+            width: 100%;
+            max-width: 980px;
+        }
+
+        /* NAVBAR */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #c09bff;
+            text-shadow: 0 0 8px rgba(255,124,181,0.45);
+        }
+
+        .nav-right a,
+        .nav-right span {
+            margin-left: 10px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #8bdfff;
+        }
+
+        .nav-right a {
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            transition: 0.25s ease;
+        }
+
+        .nav-right a:hover {
+            border-color: rgba(103,249,255,0.5);
+            background: rgba(10,40,70,0.8);
+            box-shadow: 0 0 10px rgba(103,249,255,0.3);
+        }
+
+        .container {
+            background: rgba(9, 20, 40, 0.72);
+            border-radius: 22px;
+            border: 1px solid rgba(103, 249, 255, 0.15);
+            box-shadow: 0 0 35px rgba(69, 224, 255, 0.07);
+            padding: 26px 26px 30px;
+            backdrop-filter: blur(14px);
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 4px;
+            color: #b8eaff;
+            text-shadow: 0 0 8px rgba(41,196,255,0.35);
+        }
+
+        p.subtitle {
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            color: #8db5ce;
+        }
+
+        .card {
+            background: rgba(10, 30, 55, 0.75);
+            border-radius: 18px;
+            padding: 18px 18px 20px;
+            margin-top: 18px;
+            border: 1px solid rgba(80,199,255,0.12);
+            box-shadow: 0 0 18px rgba(70,207,255,0.05);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 30px rgba(70,207,255,0.09);
+            transform: translateY(-1px);
+        }
+
+        label {
+            margin-bottom: 6px;
+            display: block;
+            font-size: 0.9rem;
+            color: #b6dfff;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(78,162,255,0.2);
+            background: rgba(5,17,38,0.9);
+            color: #dff9ff;
+            font-size: 0.95rem;
+            transition: 0.25s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #67f9ff;
+            box-shadow: 0 0 10px rgba(103,249,255,0.35);
+            outline: none;
+            transform: scale(1.005);
+        }
+
+        input[type="time"] {
+            background-image: url('https://img.icons8.com/ios-filled/50/67f9ff/sleeping.png');
+            background-size: 18px;
+            background-repeat: no-repeat;
+            background-position: 96% 50%;
+            padding-right: 32px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 0;
+            margin-top: 10px;
+            border-radius: 18px;
+            border: none;
+            background: linear-gradient(135deg,#1cdedc,#4bfdf6);
+            box-shadow: 0 0 15px rgba(76,245,255,0.4);
+            color: #04262c;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+        }
+
+        .error { color:#ff8b9a; font-size:0.9rem; margin-top:4px; }
+        .success { color:#8bffb2; font-size:0.9rem; margin-top:4px; }
+
+        /* STAR RATING (GENEL) */
+        .star-group {
+            margin: 10px 0 14px;
+        }
+        .star-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #b6dfff;
+        }
+        .star-rating {
+            direction: rtl;
+            display: inline-flex;
+            font-size: 28px;
+            gap: 2px;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            transition: 0.2s;
+            filter: grayscale(100%) opacity(0.4);
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            filter: grayscale(0%) opacity(1);
+            text-shadow: 0 0 10px rgba(255,210,255,0.75),
+                         0 0 6px rgba(255,255,160,0.6);
+        }
+        .star-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            color:#8db5ce;
+            max-width: 260px;
+        }
+
+        /* Arka plan canvas */
+        #background-stars {
+            position: fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            pointer-events:none;
+            z-index:-1;
+        }
+    </style>
+</head>
+<body>
+<canvas id="background-stars"></canvas>
+
+<div class="shell">
+    <div class="nav">
+        <div class="nav-left">
+            <span class="logo">Somnia 🌙</span>
+        </div>
+        <div class="nav-right">
+            {% if username %}
+                <span>Merhaba, {{ username }}</span>
+                <a href="{{ url_for('index') }}">Uyku Asistanı</a>
+                <a href="{{ url_for('analiz') }}">Analiz Paneli</a>
+                <a href="{{ url_for('change_password') }}">Şifre Değiştir</a>
+                <a href="{{ url_for('logout') }}">Çıkış</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Giriş</a>
+                <a href="{{ url_for('register') }}">Kayıt Ol</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='background.js') }}"></script>
+</body>
+</html>
