@@ -124,14 +124,14 @@
 </div>
 
 <style>
-    /* DÜZEN */
+   
     .main-content-wrapper { width: 100%; max-width: 600px; margin-right: 400px; }
     
-    /* SENİN AYARLADIĞIN HİZALAMA */
+   
     .header-row {
         display: flex;
         align-items: center; 
-        gap: 165px; /* Senin istediğin özel boşluk */
+        gap: 165px; 
         margin-bottom: 5px;
     }
     .header-row h1 {
@@ -159,18 +159,18 @@
 
     @media (max-width: 1100px) { .main-content-wrapper { margin-right: 0; max-width: 100%; } #chat-window { display: none !important; } }
     
-    /* SENİN İSTEDİĞİN GİZLİ MENÜ KONUMU */
+    
     #model-sidebar { position: fixed; top: 0; left: -3500px; width: 300px; height: 100%; background: rgba(5, 15, 30, 0.98); border-right: 1px solid #67f9ff; padding: 20px; transition: 0.4s ease; z-index: 3000; box-shadow: 5px 0 30px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
     #model-sidebar.active { left: 0; }
 
-    /* SENİN AYARLADIĞIN CHAT PENCERESİ */
+   
     #chat-window { 
         display: flex; 
         position: fixed; 
         top: 30px; 
-        bottom: 250px; /* Senin değerin */
-        right: 10px;   /* Senin değerin */
-        width: 320px;  /* Senin değerin */
+        bottom: 250px; 
+        right: 10px;   
+        width: 320px;  
         background: rgba(13, 25, 48, 0.9); 
         border: 1px solid #4bfdf6; 
         border-radius: 20px; 
@@ -206,5 +206,6 @@
         .then(r=>r.json()).then(d=>{ body.innerHTML += `<div class="msg bot">${d.response}</div>`; body.scrollTop = body.scrollHeight; });
     }
 </script>
+
 
 {% endblock %}
