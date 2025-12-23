@@ -39,45 +39,38 @@ def time_to_minutes(hhmm: str) -> int:
 def is_logged_in() -> bool:
     return "user_id" in session
 
-# --- YENİ: Koçluk Cümlesi Üretici ---
+
 def generate_coach_feedback(bed_minutes, sleep_minutes, efficiency):
     """
     Kullanıcının istediği 'Düzenin ... ilerliyor. ... gerekli.' formatını üretir.
     """
     status = ""
     needed = ""
-    
-    # Dakika normalizasyonu (Gece yarısından sonrası için)
-    # Örn: 01:00 -> 25*60 gibi gelebilir veya direkt küçük gelebilir.
-    # Burada basitçe saati kontrol edelim.
-    
-    # 1. Geç Yatış Kontrolü (01:00 - 05:00 arası yatışlar)
-    # bed_minutes genelde 22:00 (1320) ile 09:00 (540) arasında değişir.
-    # 24 saati (1440 dk) mod alarak bakalım.
+  
     normalized_bed = bed_minutes % 1440
     
     if 60 < normalized_bed < 300: # 01:00 ile 05:00 arası
         status = "biyolojik saatinle uyumsuz"
         needed = "yatış saatini öne çekmen"
     
-    # 2. Süre Kontrolü (Öncelikli)
+   
     elif sleep_minutes < 360: # 6 saatten az
         status = "vücudunu yıpratacak"
         needed = "daha fazla dinlenme süresi"
         
-    # 3. Verim Kontrolü
+    
     elif efficiency < 0.75:
         status = "kalitesiz ve kesintili"
         needed = "derin uyku ortamı (karanlık/sessizlik)"
         
-    # 4. İyi Durum
+
     else:
         status = "oldukça sağlıklı ve dengeli"
         needed = "bu istikrarı koruman"
 
     return f"Yatma düzenin <strong>{status}</strong> şekilde ilerliyor.<br>Daha fazla <strong>{needed}</strong> gerekli."
 
-# --- Analiz Motoru (Chat İçin) ---
+
 def analyze_sleep_chat(efficiency, sleep_minutes, lifestyle):
     caffeine, alcohol, smoking, exercise = lifestyle
     bad_habits = []
@@ -92,7 +85,7 @@ def analyze_sleep_chat(efficiency, sleep_minutes, lifestyle):
         msg = "Uyku verimin gayet iyi. Aynen devam!"
     return msg
 
-# --- Auth Route'ları ---
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if is_logged_in(): return redirect(url_for("index"))
@@ -132,13 +125,13 @@ def index():
     brain = get_brain_for_user(user_id)
     suggestion = None
     suggestion_source = ""
-    feedback_text = None # YENİ: Kartın içine yazılacak metin
+    feedback_text = None 
     auto_chat_msg = None
     
     context = {"bed_time": "", "wake_time": "07:00", "efficiency": 80, 
                "caffeine": 0, "alcohol": 0, "smoking": 0, "exercise": 3}
 
-    # POST (Yeni Veri)
+    
     if request.method == "POST":
         bed = request.form.get("bed_time")
         wake = request.form.get("wake_time")
@@ -162,17 +155,16 @@ def index():
             predicted_eff = brain.update_and_predict(bed_m, wake_m, eff_input, lifestyle)
             suggestion = brain.choose_optimal_bedtime(wake_m, lifestyle)
             
-            # Koçluk Mesajını Üret
             feedback_text = generate_coach_feedback(bed_m, sleep_minutes, eff_input)
             
-            # Chat mesajı (Opsiyonel, otomatik açılmasını istersen)
+            
             auto_chat_msg = analyze_sleep_chat(eff_input, sleep_minutes, lifestyle)
 
             insert_sleep_record(user_id, bed, wake, eff_input, sleep_minutes, predicted_eff,
                                 caffeine, alcohol, smoking, exercise, suggestion.best_bedtime_minutes)
             suggestion_source = "current"
 
-    # GET (İlk Açılış)
+    
     else:
         last_rec = get_last_sleep_detail(user_id)
         if last_rec:
@@ -181,14 +173,10 @@ def index():
             wake_m = time_to_minutes(last_wake_str)
             lifestyle = [caf, alc, smk, exc]
             
-            # Geçmiş veriden öneri ve feedback oluştur
-            # (Burada bed_time tam bilinmediği için varsayılan bir hesaplama yapılabilir 
-            # veya son kayıttaki bed_time kullanılabilir ama veritabanında text olarak duruyor. 
-            # Basitlik için verim ve süreye odaklanalım)
-            
+                        
             suggestion = brain.choose_optimal_bedtime(wake_m, lifestyle)
             
-            # Geçmiş kayıttan feedback üret (Basitçe verime bakarak)
+           
             feedback_text = generate_coach_feedback(0, mins, eff) # Saat 0 çünkü geçmiş yatışı şimdi hesaplamıyoruz
             
             suggestion_source = "history"
@@ -204,14 +192,14 @@ def index():
                            model_stats=model_stats,
                            **context)
 
-# --- CHAT ---
+
 @app.route("/api/chat", methods=["POST"])
 def api_chat():
     if not is_logged_in(): return jsonify({"response": "Lütfen giriş yap."})
     msg = request.json.get("message", "").lower()
     user_id = session["user_id"]
     
-    # JSON Kontrolü
+    
     all_patterns = []
     pattern_map = {}
     for intent in intents['intents']:
@@ -226,7 +214,7 @@ def api_chat():
             if intent['tag'] == tag:
                 return jsonify({"response": random.choice(intent['responses'])})
 
-    # Kişisel Veri
+   
     last_record = get_last_sleep_detail(user_id)
     if not last_record: return jsonify({"response": "Veri girmeden seni analiz edemem."})
     
@@ -257,4 +245,5 @@ def api_data():
 
 if __name__ == "__main__":
     create_tables()
+
     app.run(debug=True)
